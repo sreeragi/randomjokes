@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cards</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="container-fluid bg-primary-subtle">
+        <h1 class="text-center py-5 text-danger">Products in stock</h1>
+        <div class="mt-5">
+            <div class="row col-12 g-4 ps-5" id="result">
+                <!-- cards -->
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<script>
+    const api = new XMLHttpRequest();
+    api.open("GET", "https://dummyjson.com/carts")
+    api.send()
+    api.onreadystatechange = () => {
+        if (api.readyState == 4) {
+            if (api.status >= 200 && api.status < 300) {
+                const item = JSON.parse(api.responseText)
+                item.carts.forEach(element => {
+                    element.products.forEach(item=>{
+                        result.innerHTML += `
+                    <div class="col">
+                    <div class="card mb-3" style="width: 18rem; height:11rem">
+                        <div class="card-body">
+                            <h5 class="card-titile">${item.title}</h5>
+                            <p class="card-text">${item.price}</p>
+                            <a href="#" class="btn btn-primary">Add to cart</a>
+                        </div>
+                    </div>
+                 </div>
+                 `
+
+                    })
+                
+                })
+            }else{
+                console.log("API call failed.........")
+            }
+        }else {
+            console.log("waiting for server response")
+        }
+    }
+
+</script>
+
+</html>
